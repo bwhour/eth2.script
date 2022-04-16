@@ -67,7 +67,7 @@ rm ~/prysmvc.service
 echo 'if $programname == "prysmbn" then /home/amber/logs/prysmbn/prysmbn.log
 if $programname == "prysmvc" then /home/amber/logs/prysmvc/prysmvc.log
 & stop' > ~/prysm.conf
-echo $SU_PASSWORD | sudo -S cp ~/pocket.conf /etc/rsyslog.d/prysm.conf
+echo $SU_PASSWORD | sudo -S cp ~/prysm.conf /etc/rsyslog.d/prysm.conf
 rm ~/prysm.conf
 
 # logrotate

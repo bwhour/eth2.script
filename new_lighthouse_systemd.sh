@@ -80,7 +80,7 @@ rm ~/lighthousevc.service
 echo 'if $programname == "lighthousebn" then /home/amber/logs/lighthousebn/lighthousebn.log
 if $programname == "lighthousevc" then /home/amber/logs/lighthousevc/lighthousevc.log
 & stop' > ~/lighthouse.conf
-echo $SU_PASSWORD | sudo -S cp ~/pocket.conf /etc/rsyslog.d/lighthouse.conf
+echo $SU_PASSWORD | sudo -S cp ~/lighthouse.conf /etc/rsyslog.d/lighthouse.conf
 rm ~/lighthouse.conf
 
 # logrotate
