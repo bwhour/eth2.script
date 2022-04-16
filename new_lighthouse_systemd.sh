@@ -9,7 +9,7 @@ do
     case "$optname" in
       "n") SERVER_NUMBER=$OPTARG ;;
       "a") SU_PASSWORD=$OPTARG ;;
-      "h") echo "new_lighthouse_systemd.sh.sh -n 1-a <password>" ;;
+      "h") echo "new_lighthouse_systemd.sh -n 1-a <password>" ;;
       ":") echo "No argument value for option $OPTARG" ;;
       "?") echo "Unknown option $OPTARG" ;;
       *) echo "Unknown error while processing options" ;;
