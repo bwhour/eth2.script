@@ -2,7 +2,7 @@
 # -n Server Number
 
 SERVER_NUMBER=0
-SU_PASSWORD=''
+SU_PASSWORD='&kHLJ2h#zQ&BSIuH'
 
 while getopts ":n:a:h" optname
 do
@@ -35,8 +35,9 @@ User=amber
 Type=simple
 ExecStart=/usr/local/bin/lighthouse  bn   \
   --network prater   \
-  --datadir /home/amber/eth2  \
+  --datadir /home/amber/.eth2  \
   --staking   \
+  --http      \
   --http-allow-sync-stalled     \
   --eth1-endpoints https://blockchain-beta.amberainsider.com/goerli,https://apis.ankr.com/71f4b42d70a54565894113da390ec08b/c942b301ab4cd3e91c05afbc7c0ab06f/eth/fast/goerli,https://rpc.goerli.mudit.blog    \
   --metrics     \
@@ -63,7 +64,12 @@ After=syslog.target network.target
 [Service]
 User=amber
 Type=simple
-ExecStart=/usr/local/bin/lighthouse vc --testnet medalla
+ExecStart=/usr/local/bin/lighthouse vc \
+  --network prater \
+  --metrics \
+  --datadir /home/amber/.eth2/lighthousevc \
+  --graffiti Amber \
+  --suggested-fee-recipient 0xddF96802613aF354dcC1cb1A32910d6d997E54b0
 KillMode=process
 KillSignal=SIGINT
 TimeoutStopSec=90

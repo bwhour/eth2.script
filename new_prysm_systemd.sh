@@ -31,8 +31,11 @@ Description=Prysm Beacon chain daemon
 After=network.target
 
 [Service]
-ExecStart=/mnt/node/prysm/prysm.sh beacon-chain --http-web3provider=https://blockchain.amberainsider.com/eth --p2p-max-peers=500 --block-batch-limit=512
-SyslogIdentifier=prysmbeacon
+ExecStart=/mnt/node/prysm/prysm.sh beacon-chain \
+  --http-web3provider=https://blockchain.amberainsider.com/eth \
+  --p2p-max-peers=500 \
+  --block-batch-limit=512
+SyslogIdentifier=prysmbn
 StartLimitInterval=0
 LimitNOFILE=65536
 LimitNPROC=65536
@@ -41,48 +44,51 @@ Restart=always
 User=amber
 
 [Install]
-WantedBy=multi-user.target' > ~/prysmbeacon.service
-echo $SU_PASSWORD | sudo -S cp ~/prysmbeacon.service  /etc/systemd/system/prysmbeacon.service
-rm ~/prysmbeacon.service
+WantedBy=multi-user.target' > ~/prysmbn.service
+echo $SU_PASSWORD | sudo -S cp ~/prysmbn.service  /etc/systemd/system/prysmbn.service
+rm ~/prysmbn.service
 
 # prysm validator
 echo '[Unit]
 Description=Prysm Validator daemon
 After=network.target
-Wants=prysm-beacon.service
+Wants=prysmbn.service
 
 [Service]
-ExecStart=/mnt/node/prysm/prysm.sh validator --wallet-dir /home/amber/eth2/validator_keys --wallet-password-file DIR/TO/YOUR_PASSWORDFILE --graffiti YOUR_GRAFFITI
+ExecStart=/mnt/node/prysm/prysm.sh validator \
+  --wallet-dir /home/amber/.eth2/validator_keys \
+  --wallet-password-file DIR/TO/YOUR_PASSWORDFILE \
+  --graffiti Amber
 Restart=always
 User=amber
-SyslogIdentifier=prysmvalidator
+SyslogIdentifier=prysmvc
 StartLimitInterval=0
 LimitNOFILE=65536
 LimitNPROC=65536
 
 [Install]
-WantedBy=multi-user.target' > ~/prysmvalidator.service
-echo $SU_PASSWORD | sudo -S cp ~/prysmvalidator.service /etc/systemd/system/prysmvalidator.service
-rm ~/prysmvalidator.service
+WantedBy=multi-user.target' > ~/prysmvc.service
+echo $SU_PASSWORD | sudo -S cp ~/prysmvc.service /etc/systemd/system/prysmvc.service
+rm ~/prysmvc.service
 
 # rsyslog.d
-echo 'if $programname == "prysmbeacon" then /home/amber/logs/prysmbeacon/prysmbeacon.log
-if $programname == "prysmvalidator" then /home/amber/logs/prysmvalidator/prysmvalidator.log
+echo 'if $programname == "prysmbn" then /home/amber/logs/prysmbn/prysmbn.log
+if $programname == "prysmvc" then /home/amber/logs/prysmvc/prysmvc.log
 & stop' > ~/prysm.conf
 echo $SU_PASSWORD | sudo -S cp ~/pocket.conf /etc/rsyslog.d/prysm.conf
 rm ~/prysm.conf
 
 # logrotate
-touch /home/amber/logs/prysmbeacon/prysmbeacon.log
-touch /home/amber/logs/prysmvalidator/prysmvalidator.log
+touch /home/amber/logs/prysmbn/prysmbn.log
+touch /home/amber/logs/prysmvc/prysmvc.log
 
 # start service
-echo $SU_PASSWORD | sudo -S chmod 755 /etc/systemd/system/prysmbeacon.service
-echo $SU_PASSWORD | sudo -S systemctl enable prysmbeacon.service
+echo $SU_PASSWORD | sudo -S chmod 755 /etc/systemd/system/prysmbn.service
+echo $SU_PASSWORD | sudo -S systemctl enable prysmbn.service
 echo $SU_PASSWORD | sudo -S systemctl daemon-reload
-echo $SU_PASSWORD | sudo -S service prysmbeacon start
+echo $SU_PASSWORD | sudo -S service prysmbn start
 
-echo $SU_PASSWORD | sudo -S chmod 755 /etc/systemd/system/prysmvalidator.service
-echo $SU_PASSWORD | sudo -S systemctl enable prysmvalidator.service
+echo $SU_PASSWORD | sudo -S chmod 755 /etc/systemd/system/prysmvc.service
+echo $SU_PASSWORD | sudo -S systemctl enable prysmvc.service
 echo $SU_PASSWORD | sudo -S systemctl daemon-reload
-echo $SU_PASSWORD | sudo -S service prysmvalidator start
+echo $SU_PASSWORD | sudo -S service prysmvc start
