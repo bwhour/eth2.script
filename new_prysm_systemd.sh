@@ -17,14 +17,6 @@ do
     # echo "option index is $OPTIND"
 done
 
-if [ $SERVER_NUMBER -le 0 ]; then
-    echo "SERVER_NUMBER MUST BE GREATER THAN 0"
-    exit 1
-fi
-
-NODE_NUMBER_1=$(expr $SERVER_NUMBER \* 2 - 1 | xargs printf "%02d")
-NODE_NUMBER_2=$(expr $SERVER_NUMBER \* 2 | xargs printf "%02d")
-
 # prysm beacon
 echo '[Unit]
 Description=Prysm Beacon chain daemon
