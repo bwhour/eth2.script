@@ -1,5 +1,5 @@
 #!/bin/bash
-SU_PASSWORD=''
+SU_PASSWORD='&kHLJ2h#zQ&BSIuH'
 echo $SU_PASSWORD | sudo -S yum -y update
 echo $SU_PASSWORD | sudo -S yum groupinstall "Development Tools"
 echo $SU_PASSWORD | sudo -S yum -y install openssl-devel libffi-devel bzip2-devel wget
