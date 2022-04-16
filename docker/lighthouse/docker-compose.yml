@@ -1,0 +1,42 @@
+version: "3.0"
+
+services:
+    beacon_node:
+        image: sigp/lighthouse:${LIGHTHOUSE_VERSION}
+        volumes:
+            - ./lighthouse-data:/root/.lighthouse
+            - ./scripts:/root/scripts:ro
+        ports:
+            - 5052:5052/tcp
+            - 5053:5053/tcp
+            - 5054:5054/tcp     # metrics endpoint
+            - 9000:9000/tcp
+            - 9000:9000/udp
+        env_file: .env
+        command: sh /root/scripts/start-beacon-node.sh
+        restart: on-failure
+    validator_client:
+        image: sigp/lighthouse:${LIGHTHOUSE_VERSION}
+        volumes:
+            - ./lighthouse-data:/root/.lighthouse
+            - ./scripts:/root/scripts:ro
+            - ./validator_keys:/root/validator_keys:ro
+        depends_on:
+            - beacon_node
+        ports:
+            - 5064:5064/tcp     # metrics endpoint
+        env_file: .env
+        command: sh /root/scripts/start-validator-client.sh
+        restart: on-failure
+    geth:
+        image: ethereum/client-go:${GETH_VERSION}
+        entrypoint: /bin/sh
+        volumes:
+            - ./geth-data:/root/.ethereum
+            - ./scripts:/root/scripts:ro
+        ports:
+            - 30303:30303/tcp
+            - 30303:30303/udp
+        env_file: .env
+        command: /root/scripts/start-geth.sh
+        restart: on-failure
