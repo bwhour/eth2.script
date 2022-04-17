@@ -24,9 +24,11 @@ After=network.target
 
 [Service]
 ExecStart=/mnt/node/prysm/prysm.sh beacon-chain \
+  --prater \
   --http-web3provider=https://blockchain.amberainsider.com/eth \
   --p2p-max-peers=500 \
   --block-batch-limit=512
+  --accept-terms-of-use
 SyslogIdentifier=prysmbn
 StartLimitInterval=0
 LimitNOFILE=65536
@@ -48,6 +50,7 @@ Wants=prysmbn.service
 
 [Service]
 ExecStart=/mnt/node/prysm/prysm.sh validator \
+  --prater \
   --wallet-dir /home/amber/.eth2/validator_keys \
   --wallet-password-file DIR/TO/YOUR_PASSWORDFILE \
   --graffiti Amber

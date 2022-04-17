@@ -18,6 +18,7 @@ services:
       - --datadir=/data
       - --rpc-host=0.0.0.0
       - --monitoring-host=0.0.0.0
+      - --accept-terms-of-use
       - --http-web3provider==https://blockchain.amberainsider.com/eth
     volumes:
       - $HOME/.eth2:/data
