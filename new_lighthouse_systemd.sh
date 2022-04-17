@@ -26,7 +26,7 @@ After=syslog.target network.target
 User=amber
 Type=simple
 ExecStart=/usr/local/bin/lighthouse  bn   \
-  --network prater   \
+  --network mainnet   \
   --datadir /home/amber/.eth2  \
   --staking   \
   --http      \
@@ -57,7 +57,7 @@ After=syslog.target network.target
 User=amber
 Type=simple
 ExecStart=/usr/local/bin/lighthouse vc \
-  --network prater \
+  --network mainnet \
   --metrics \
   --datadir /home/amber/.eth2/lighthousevc \
   --graffiti Amber \
