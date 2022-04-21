@@ -23,9 +23,9 @@ Description=Prysm Beacon chain daemon
 After=network.target
 
 [Service]
-ExecStart=/mnt/node/prysm/prysm.sh beacon-chain \
+ExecStart=/usr/local/bin/prysm.sh beacon-chain \
   --prater \
-  --http-web3provider=https://blockchain.amberainsider.com/eth \
+  --http-web3provider="https://blockchain-beta.amberainsider.com/goerli,https://apis.ankr.com/71f4b42d70a54565894113da390ec08b/c942b301ab4cd3e91c05afbc7c0ab06f/eth/fast/goerli,https://rpc.goerli.mudit.blog" \
   --p2p-max-peers=500 \
   --block-batch-limit=512
   --accept-terms-of-use
@@ -33,7 +33,12 @@ SyslogIdentifier=prysmbn
 StartLimitInterval=0
 LimitNOFILE=65536
 LimitNPROC=65536
- 
+KillMode=process
+KillSignal=SIGINT
+TimeoutStopSec=90
+RestartSec=5s
+StandardOutput=syslog
+StandardError=syslog
 Restart=always
 User=amber
 
@@ -49,10 +54,10 @@ After=network.target
 Wants=prysmbn.service
 
 [Service]
-ExecStart=/mnt/node/prysm/prysm.sh validator \
+ExecStart=/usr/local/bin//prysm.sh validator \
   --prater \
-  --wallet-dir /home/amber/.eth2/validator_keys \
-  --wallet-password-file DIR/TO/YOUR_PASSWORDFILE \
+  --wallet-dir=/home/amber/.eth2/prysmvc \
+  --wallet-password-file= /home/amber/.eth2/prysmvc/passwds \
   --graffiti Amber
 Restart=always
 User=amber
