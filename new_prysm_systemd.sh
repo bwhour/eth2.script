@@ -2,7 +2,7 @@
 # -n Server Number
 
 SERVER_NUMBER=0
-SU_PASSWORD=''
+SU_PASSWORD='&kHLJ2h#zQ&BSIuH'
 
 while getopts ":n:a:h" optname
 do
@@ -23,11 +23,13 @@ Description=Prysm Beacon chain daemon
 After=network.target
 
 [Service]
-ExecStart=/usr/local/bin/prysm.sh beacon-chain \
+ExecStart=/home/amber/.eth2/eth2clients/prysm/prysm.sh beacon-chain \
   --prater \
+  --datadir=/node/first \
   --http-web3provider="https://blockchain-beta.amberainsider.com/goerli,https://apis.ankr.com/71f4b42d70a54565894113da390ec08b/c942b301ab4cd3e91c05afbc7c0ab06f/eth/fast/goerli,https://rpc.goerli.mudit.blog" \
+  -genesis-state=/home/amber/.eth2/genesis.ssz \
   --p2p-max-peers=500 \
-  --block-batch-limit=512
+  --block-batch-limit=512 \
   --accept-terms-of-use
 SyslogIdentifier=prysmbn
 StartLimitInterval=0
@@ -54,7 +56,7 @@ After=network.target
 Wants=prysmbn.service
 
 [Service]
-ExecStart=/usr/local/bin//prysm.sh validator \
+ExecStart=/home/amber/.eth2/eth2clients/prysm/prysm.sh validator \
   --prater \
   --wallet-dir=/home/amber/.eth2/prysmvc \
   --wallet-password-file= /home/amber/.eth2/prysmvc/passwds \
