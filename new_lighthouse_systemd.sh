@@ -28,6 +28,8 @@ Type=simple
 ExecStart=/usr/local/bin/lighthouse  bn   \
   --network prater   \
   --datadir /home/amber/.eth2  \
+  --subscribe-all-subnets \
+  --target-peers 80 \
   --staking   \
   --http      \
   --http-allow-sync-stalled     \
