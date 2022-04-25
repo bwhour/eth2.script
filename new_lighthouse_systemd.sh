@@ -1,21 +1,5 @@
 #!/bin/bash
-# -n Server Number
-
-SERVER_NUMBER=0
 SU_PASSWORD='&kHLJ2h#zQ&BSIuH'
-
-while getopts ":n:a:h" optname
-do
-    case "$optname" in
-      "n") SERVER_NUMBER=$OPTARG ;;
-      "a") SU_PASSWORD=$OPTARG ;;
-      "h") echo "new_lighthouse_systemd.sh -n 1-a <password>" ;;
-      ":") echo "No argument value for option $OPTARG" ;;
-      "?") echo "Unknown option $OPTARG" ;;
-      *) echo "Unknown error while processing options" ;;
-    esac
-    # echo "option index is $OPTIND"
-done
 
 # lighthouse beacon
 echo '[Unit]
@@ -30,9 +14,13 @@ ExecStart=/usr/local/bin/lighthouse  bn   \
   --datadir /home/amber/.eth2  \
   --staking   \
   --http      \
+    --http-address 0.0.0.0     \
+  --subscribe-all-subnets    \
+  --import-all-attestations    \
   --http-allow-sync-stalled     \
-  --eth1-endpoints https://blockchain-beta.amberainsider.com/goerli,https://apis.ankr.com/71f4b42d70a54565894113da390ec08b/c942b301ab4cd3e91c05afbc7c0ab06f/eth/fast/goerli,https://rpc.goerli.mudit.blog    \
+  --eth1-endpoints   https://blockchain.amberainsider.com/eth    \
   --metrics     \
+  --accept-terms-of-use \
   --validator-monitor-auto
 KillMode=process
 KillSignal=SIGINT
@@ -58,7 +46,7 @@ User=amber
 Type=simple
 ExecStart=/usr/local/bin/lighthouse vc \
   --network mainnet \
-  --metrics \
+  --metrics  \
   --datadir /home/amber/.eth2/lighthousevc \
   --graffiti Amber \
   --suggested-fee-recipient 0xddF96802613aF354dcC1cb1A32910d6d997E54b0

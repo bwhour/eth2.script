@@ -1,21 +1,7 @@
 #!/bin/bash
 # -n Server Number
 
-SERVER_NUMBER=0
 SU_PASSWORD=''
-
-while getopts ":n:a:h" optname
-do
-    case "$optname" in
-      "n") SERVER_NUMBER=$OPTARG ;;
-      "a") SU_PASSWORD=$OPTARG ;;
-      "h") echo "setup_systemd.sh -n 1-a <password>" ;;
-      ":") echo "No argument value for option $OPTARG" ;;
-      "?") echo "Unknown option $OPTARG" ;;
-      *) echo "Unknown error while processing options" ;;
-    esac
-    # echo "option index is $OPTIND"
-done
 
 # prysm beacon
 echo '[Unit]
@@ -25,8 +11,9 @@ After=network.target
 [Service]
 ExecStart=/mnt/node/prysm/prysm.sh beacon-chain \
   --http-web3provider=https://blockchain.amberainsider.com/eth \
-  --p2p-max-peers=500 \
-  --block-batch-limit=512
+  --p2p-max-peers=500   \
+  --block-batch-limit=512  \
+  --accept-terms-of-use  
 SyslogIdentifier=prysmbn
 StartLimitInterval=0
 LimitNOFILE=65536
