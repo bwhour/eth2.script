@@ -22,7 +22,7 @@ After=network.target
 User=amber
 Restart=always
 RestartSec=5s
-ExecStart=/home/amber/.eth2/prysm/prysm.sh beacon-chain --config-file=home/amber/.eth2/conf/prysmbn.yaml
+ExecStart=/home/amber/.eth2/prysm/prysm.sh beacon-chain --config-file=/home/amber/.eth2/conf/prysmbn.yaml
 
 KillMode=process
 KillSignal=SIGINT
@@ -48,7 +48,7 @@ User=amber
 Restart=always
 RestartSec=5s
 
-ExecStart=/home/amber/.eth2/prysm/prysm.sh validator --config-file=home/amber/.eth2/conf/prysmvc.yaml
+ExecStart=/home/amber/.eth2/prysm/prysm.sh validator --config-file=/home/amber/.eth2/conf/prysmvc.yaml
 
 KillMode=process
 KillSignal=SIGINT
