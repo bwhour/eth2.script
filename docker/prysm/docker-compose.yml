@@ -1,33 +1,48 @@
 version: "3.8"
 
 services:
-  beacon-node:
-    container_name: beacon-node
-    image: gcr.io/prysmaticlabs/prysm/beacon-chain:$PRYSM_VERSION
-    stdin_open: true # docker run -i
-    tty: true        # docker run -t
+  beacon:
+    image: gcr.io/prysmaticlabs/prysm/beacon-chain:${PRYSM_DOCKER_TAG}
     restart: always
+    hostname: beacon-chain
+    command: --config-file=/config/beacon.yaml
     ports:
-      - "4000:4000"
-      - "13000:13000"
-      - "12000:12000"
-      - "3500:3500"
-    command:
-      - --p2p-max-peers=500
-      - --block-batch-limit=256
-      - --datadir=/data
-      - --rpc-host=0.0.0.0
-      - --monitoring-host=0.0.0.0
-      - --http-web3provider==https://blockchain.amberainsider.com/eth
-    volumes:
-      - $HOME/.eth2:/data
-    logging:
-      driver: json-file
-      options:
-        max-size: 10m
-        tag: "{{.ImageName}}|{{.Name}}|{{.ImageFullID}}|{{.FullID}}"
+      - ${BEACON_API_IP}:4000:4000
+      - 13000:13000/tcp
+      - 12000:12000/udp
     networks:
-      - eth2
+      default:
+        aliases:
+          - prysm_beacon_slasher
+    volumes:
+      - ./config/prysm/slasher/beacon.yaml:/config/beacon.yaml:ro
+      - ./data/prysm/beacon-slasher:/data
+    <<: *logging
 
-networks:
-  eth2:
+  validator:
+    image: gcr.io/prysmaticlabs/prysm/validator:${PRYSM_DOCKER_TAG}
+    restart: on-failure
+    hostname: validator
+    depends_on:
+      - beacon
+    command: --config-file=/config/validator.yaml
+    ports:   
+      - ${BEACON_API_IP}:7500:7500/tcp # web-ui
+    volumes:
+      - ./config/prysm/validator.yaml:/config/validator.yaml:ro
+      - ./data/prysm/validator:/data
+    <<: *logging
+
+  slasher:
+    image: gcr.io/prysmaticlabs/prysm/slasher:${PRYSM_SLASHER_DOCKER_TAG}
+    restart: always
+    hostname: slasher
+    depends_on:
+      - beacon
+    command: --config-file=/config/slasher.yaml
+    volumes:
+      - ./config/prysm/slasher/slasher.yaml:/config/slasher.yaml:ro
+      - ./data/prysm/slasher:/data
+    <<: *logging
+
+# EOF
