@@ -64,6 +64,10 @@ rm ~/prysmvc.service
 
 rsync -a ../conf /home/amber/.eth2/
 
+echo 'Amber'>~/wallet-password
+rsync -au ~/wallet-password /home/amber/.eth2/wallets/passwords/
+rm ~/wallet-password
+
 # rsyslog.d
 echo 'if $programname == "prysmbn" then /home/amber/logs/prysmbn/prysmbn.log
 if $programname == "prysmvc" then /home/amber/logs/prysmvc/prysmvc.log
