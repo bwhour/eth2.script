@@ -1,6 +1,16 @@
 #!/bin/bash
 SU_PASSWORD='&kHLJ2h#zQ&BSIuH'
-
+while getopts ":p:h" optname
+do
+    case "$optname" in
+      "p") SU_PASSWORD=$OPTARG ;;
+      "h") echo "new_lighthouse_systemd.sh -a <password>" ;;
+      ":") echo "No argument value for option $OPTARG" ;;
+      "?") echo "Unknown option $OPTARG" ;;
+      *) echo "Unknown error while processing options" ;;
+    esac
+    # echo "option index is $OPTIND"
+done
 # lighthouse beacon
 echo '[Unit]
 Description=Lighthouse: Ethereum 2.0 Beacon Node

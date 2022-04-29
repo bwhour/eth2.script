@@ -2,7 +2,17 @@
 # -n Server Number
 
 SU_PASSWORD=''
-
+while getopts ":p:h" optname
+do
+    case "$optname" in
+      "p") SU_PASSWORD=$OPTARG ;;
+      "h") echo "new_lighthouse_systemd.sh -a <password>" ;;
+      ":") echo "No argument value for option $OPTARG" ;;
+      "?") echo "Unknown option $OPTARG" ;;
+      *) echo "Unknown error while processing options" ;;
+    esac
+    # echo "option index is $OPTIND"
+done
 # prysm beacon
 echo '[Unit]
 Description=Prysm Beacon chain daemon
