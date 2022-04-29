@@ -6,7 +6,7 @@ while getopts ":p:h" optname
 do
     case "$optname" in
       "p") SU_PASSWORD=$OPTARG ;;
-      "h") echo "new_lighthouse_systemd.sh -a <password>" ;;
+      "h") echo "new_prysm_systemd.sh -p <password>" ;;
       ":") echo "No argument value for option $OPTARG" ;;
       "?") echo "Unknown option $OPTARG" ;;
       *) echo "Unknown error while processing options" ;;
