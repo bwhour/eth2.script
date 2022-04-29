@@ -19,7 +19,7 @@ Description=Prysm Beacon chain daemon
 After=network.target
 
 [Service]
-ExecStart=/home/amber/.eth2/prysm/prysm.sh beacon-chain --config-file=home/amber/.eth2/prysmbn.yaml
+ExecStart=/home/amber/.eth2/prysm/prysm.sh beacon-chain --config-file=home/amber/.eth2/conf/prysmbn.yaml
 SyslogIdentifier=prysmbn
 StartLimitInterval=0
 LimitNOFILE=65536
@@ -40,7 +40,7 @@ After=network.target
 Wants=prysmbn.service
 
 [Service]
-ExecStart=/home/amber/.eth2/prysm/prysm.sh validator --config-file=home/amber/.eth2/prysmvc.yaml
+ExecStart=/home/amber/.eth2/prysm/prysm.sh validator --config-file=home/amber/.eth2/conf/prysmvc.yaml
 Restart=always
 User=amber
 SyslogIdentifier=prysmvc
