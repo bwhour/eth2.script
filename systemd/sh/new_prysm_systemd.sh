@@ -43,6 +43,9 @@ WantedBy=multi-user.target' > ~/prysmvc.service
 echo $SU_PASSWORD | sudo -S cp ~/prysmvc.service /etc/systemd/system/prysmvc.service
 rm ~/prysmvc.service
 
+cp ../conf/prysmbn.yaml /home/amber.eth2/conf/prysmbn.yaml
+cp ../conf/prysmvc.yaml /home/amber.eth2/conf/prysmvc.yaml
+
 # rsyslog.d
 echo 'if $programname == "prysmbn" then /home/amber/logs/prysmbn/prysmbn.log
 if $programname == "prysmvc" then /home/amber/logs/prysmvc/prysmvc.log
