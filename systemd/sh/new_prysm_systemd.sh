@@ -19,14 +19,18 @@ Description=Prysm Beacon chain daemon
 After=network.target
 
 [Service]
-ExecStart=/home/amber/.eth2/prysm/prysm.sh beacon-chain --config-file=home/amber/.eth2/conf/prysmbn.yaml
-SyslogIdentifier=prysmbn
-StartLimitInterval=0
-LimitNOFILE=65536
-LimitNPROC=65536
- 
-Restart=always
 User=amber
+Restart=always
+RestartSec=5s
+ExecStart=/home/amber/.eth2/prysm/prysm.sh beacon-chain --config-file=home/amber/.eth2/conf/prysmbn.yaml
+
+KillMode=process
+KillSignal=SIGINT
+TimeoutStopSec=90
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=prysmbn
+
 
 [Install]
 WantedBy=multi-user.target' > ~/prysmbn.service
@@ -40,13 +44,18 @@ After=network.target
 Wants=prysmbn.service
 
 [Service]
-ExecStart=/home/amber/.eth2/prysm/prysm.sh validator --config-file=home/amber/.eth2/conf/prysmvc.yaml
-Restart=always
 User=amber
+Restart=always
+RestartSec=5s
+
+ExecStart=/home/amber/.eth2/prysm/prysm.sh validator --config-file=home/amber/.eth2/conf/prysmvc.yaml
+
+KillMode=process
+KillSignal=SIGINT
+TimeoutStopSec=90
+StandardOutput=syslog
+StandardError=syslog
 SyslogIdentifier=prysmvc
-StartLimitInterval=0
-LimitNOFILE=65536
-LimitNPROC=65536
 
 [Install]
 WantedBy=multi-user.target' > ~/prysmvc.service

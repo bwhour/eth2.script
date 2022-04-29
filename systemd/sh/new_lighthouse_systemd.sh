@@ -19,6 +19,9 @@ After=syslog.target network.target
 [Service]
 User=amber
 Type=simple
+Restart=always
+RestartSec=5s
+
 ExecStart=/usr/local/bin/lighthouse  bn   \
   --network mainnet   \
   --datadir /home/amber/.eth2  \
@@ -32,11 +35,10 @@ ExecStart=/usr/local/bin/lighthouse  bn   \
   --metrics     \
   --accept-terms-of-use \
   --validator-monitor-auto
+
 KillMode=process
 KillSignal=SIGINT
 TimeoutStopSec=90
-Restart=on-failure
-RestartSec=5s
 StandardOutput=syslog
 StandardError=syslog
 SyslogIdentifier=lighthousebn
@@ -54,17 +56,20 @@ After=syslog.target network.target
 [Service]
 User=amber
 Type=simple
+Restart=always
+RestartSec=5s
+
 ExecStart=/usr/local/bin/lighthouse vc \
   --network mainnet \
   --metrics  \
   --datadir /home/amber/.eth2/lighthousevc \
   --graffiti Amber \
   --suggested-fee-recipient 0xddF96802613aF354dcC1cb1A32910d6d997E54b0
+
 KillMode=process
 KillSignal=SIGINT
 TimeoutStopSec=90
-Restart=always
-RestartSec=5s
+
 StandardOutput=syslog
 StandardError=syslog
 SyslogIdentifier=lighthousevc
@@ -82,8 +87,8 @@ echo $SU_PASSWORD | sudo -S cp ~/lighthouse.conf /etc/rsyslog.d/lighthouse.conf
 rm ~/lighthouse.conf
 
 # logrotate
-touch /home/amber/logs/lighthousebn/lighthousebn.log
-touch /home/amber/logs/lighthousevc/lighthousevc.log
+touch -c /home/amber/logs/lighthousebn/lighthousebn.log
+touch -c /home/amber/logs/lighthousevc/lighthousevc.log
 
 # start service
 echo $SU_PASSWORD | sudo -S chmod 755 /etc/systemd/system/lighthousebn.service
