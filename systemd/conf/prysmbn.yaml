@@ -7,7 +7,7 @@
 
 accept-terms-of-use: yes
 
-datadir: /data
+datadir: /home/amber/.eth2
 
 #######################
 # Connectivity settings 

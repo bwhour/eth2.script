@@ -20,9 +20,9 @@ web: yes
 
 #####################################
 # Validator database, accounts & key management
-datadir: /data/vc
-wallet-dir: /data/wallets
-wallet-password-file: /data/passwords/wallet-password
+datadir: /home/amber/.eth2/vc
+wallet-dir: /home/amber/.eth2/wallets
+wallet-password-file: /home/amber/.eth2/passwords/wallet-password
 
 mainnet: yes
 
