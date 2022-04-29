@@ -9,11 +9,7 @@ Description=Prysm Beacon chain daemon
 After=network.target
 
 [Service]
-ExecStart=/mnt/node/prysm/prysm.sh beacon-chain \
-  --http-web3provider=https://blockchain.amberainsider.com/eth \
-  --p2p-max-peers=500   \
-  --block-batch-limit=512  \
-  --accept-terms-of-use  
+ExecStart=/home/amber/.eth2/prysm/prysm.sh beacon-chain --config-file=home/amber/.eth2/prysmbn.yaml
 SyslogIdentifier=prysmbn
 StartLimitInterval=0
 LimitNOFILE=65536
@@ -34,10 +30,7 @@ After=network.target
 Wants=prysmbn.service
 
 [Service]
-ExecStart=/mnt/node/prysm/prysm.sh validator \
-  --wallet-dir /home/amber/.eth2/validator_keys \
-  --wallet-password-file DIR/TO/YOUR_PASSWORDFILE \
-  --graffiti Amber
+ExecStart=/home/amber/.eth2/prysm/prysm.sh validator --config-file=home/amber/.eth2/prysmvc.yaml
 Restart=always
 User=amber
 SyslogIdentifier=prysmvc

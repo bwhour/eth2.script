@@ -27,7 +27,7 @@ p2p-denylist: ["private"]
 # changing this also needs to be changed in docker-compose.yaml!
 p2p-tcp-port: 13000
 
-p2p-max-peers: 100
+p2p-max-peers: 500
 
 ##############################
 # Connection to geth container
@@ -38,6 +38,6 @@ fallback-web3provider: []
 historical-slasher-node: yes
 block-batch-limit: 512
 
-prater: yes
+mainnet: yes
 
 # EOF
