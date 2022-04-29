@@ -53,8 +53,7 @@ WantedBy=multi-user.target' > ~/prysmvc.service
 echo $SU_PASSWORD | sudo -S cp ~/prysmvc.service /etc/systemd/system/prysmvc.service
 rm ~/prysmvc.service
 
-cp ../conf/prysmbn.yaml /home/amber.eth2/conf/prysmbn.yaml
-cp ../conf/prysmvc.yaml /home/amber.eth2/conf/prysmvc.yaml
+rsync -a ../conf /home/amber/.eth2/conf/prysmbn.yaml
 
 # rsyslog.d
 echo 'if $programname == "prysmbn" then /home/amber/logs/prysmbn/prysmbn.log
@@ -64,8 +63,8 @@ echo $SU_PASSWORD | sudo -S cp ~/prysm.conf /etc/rsyslog.d/prysm.conf
 rm ~/prysm.conf
 
 # logrotate
-touch /home/amber/logs/prysmbn/prysmbn.log
-touch /home/amber/logs/prysmvc/prysmvc.log
+touch -c /home/amber/logs/prysmbn/prysmbn.log
+touch -c /home/amber/logs/prysmvc/prysmvc.log
 
 # start service
 echo $SU_PASSWORD | sudo -S chmod 755 /etc/systemd/system/prysmbn.service
